@@ -21,3 +21,5 @@ migrations/
 # IDE/Editor specific (adjust as needed)
 .idea/
 .vscode/
+# Ignore folder
+.DS_Store
