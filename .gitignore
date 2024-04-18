@@ -1,0 +1,23 @@
+# Created by https://www.toptal.com/developers/gitignore/api/python,django
+
+# Ignore common python files
+*.py[cod]
+*$py.class
+__pycache__/
+
+# Ignore virtual environment
+venv/
+bin/
+# Django specific
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+migrations/
+# Static files (uncomment if using collectstatic)
+#<project_name>/staticfiles/
+
+# IDE/Editor specific (adjust as needed)
+.idea/
+.vscode/
