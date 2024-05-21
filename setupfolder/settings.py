@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
 from pathlib import Path
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv() 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -25,7 +26,7 @@ SECRET_KEY = "django-insecure-zyh&tx(2%g_roj#g4dc*$-u9hsas^mga&z^cjfvs7b!-!n=27$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [*] #Remember to change
 
 
 # Application definition
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "corsheaders",    
     "api",
+    "djongo",
 ]
 
 MIDDLEWARE = [
@@ -87,13 +89,28 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+#DATABASES = {
+#    "default": {
+#        "ENGINE": "django.db.backends.sqlite3",
+#        "NAME": BASE_DIR / "db.sqlite3",
+#    }
+#}
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME':  os.getenv('COSMOS_DB_NAME'), # Your database name
+        'ENFORCE_SCHEMA': False,  # Set to True if you want to enforce schema
+        'CLIENT': {
+            'host': os.getenv('COSMOS_DB_HOST'),
+            'username': os.getenv('COSMOS_DB_USERNAME'),  # if required
+            'password': os.getenv('COSMOS_DB_PASSWORD'),  # if required
+            'authSource': 'admin',  # default
+            'authMechanism': 'SCRAM-SHA-256',  # default
+            'ssl': True,
+        }
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -144,3 +161,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 #Cors authorization
 
 CORS_ALLOW_ALL_ORIGINS = True #This is a security risk
+
+WSGI_APPLICATION = 'wsgi.application'
