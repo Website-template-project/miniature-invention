@@ -15,6 +15,7 @@ db.sqlite3
 db.sqlite3-journal
 media/
 migrations/
+lib/
 # Static files (uncomment if using collectstatic)
 #<project_name>/staticfiles/
 
@@ -24,3 +25,4 @@ migrations/
 # Ignore folder
 .DS_Store
 .env
+pyvenv.cfg

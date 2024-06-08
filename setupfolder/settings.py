@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 from dotenv import load_dotenv
+import certifi
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -26,7 +27,7 @@ SECRET_KEY = "django-insecure-zyh&tx(2%g_roj#g4dc*$-u9hsas^mga&z^cjfvs7b!-!n=27$
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = [*] #Remember to change
+ALLOWED_HOSTS = ['*'] #Remember to change
 
 
 # Application definition
@@ -108,6 +109,7 @@ DATABASES = {
             'authSource': 'admin',  # default
             'authMechanism': 'SCRAM-SHA-256',  # default
             'ssl': True,
+            'tlsCAFile': certifi.where(),
         }
     }
 }
@@ -161,5 +163,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 #Cors authorization
 
 CORS_ALLOW_ALL_ORIGINS = True #This is a security risk
+CORS_ALLOW_HEADERS = [
+    'Accept-Language',  # Add accept-language to the list of allowed headers
+    'Authorization',
+    'Content-Type',
+    # Add any other headers you want to allow here
+]
 
-WSGI_APPLICATION = 'wsgi.application'
+
+#WSGI_APPLICATION = 'wsgi.application'

@@ -6,7 +6,7 @@ Created on Wed Apr  3 22:52:51 2024
 @author: dangkhoa
 """
 from rest_framework import serializers
-from .models import ProductPortfolio,Profile
+from .models import ProductPortfolio,Profile,Content
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 
@@ -45,4 +45,10 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductPortfolio
         fields = '__all__'
+
+class ContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Content
+        fields = '__all__'
+        
     
