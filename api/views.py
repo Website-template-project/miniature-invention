@@ -28,6 +28,7 @@ def get_product_portfolio(request):
             "description":i.description} for i in ProductPortfolio.objects.all()]  
     return Response(res,status = status.HTTP_200_OK)
 
+@permission_classes([AllowAny])
 @api_view(['GET','POST'])
 def lang(request):
     if(request.method == 'POST'):
@@ -38,6 +39,7 @@ def lang(request):
         return Response({"data":["en-US","de-DE","vi-VN","fr-CA"]},
                         status = status.HTTP_200_OK)
 
+@permission_classes([AllowAny])
 @api_view(['POST'])
 def create_user(request):
     # Assuming the data is sent in JSON format
@@ -52,10 +54,12 @@ def create_user(request):
         if(newUser.is_valid()):
             token = newUser.save()
         return Response({'token': token},status = status.HTTP_200_OK)
-    except Error as e:
+    except Exception as e:
+        print(e)
         return Response(
             {'error': 'Invalid JSON data or unsuccessful user creation'}, 
             status = status.HTTP_400_BAD_REQUEST)
+
 """
 Create: POST
 Read: GET
@@ -99,6 +103,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = (AllowAny,)
+    def get_object(self):
+        return self.request.user
 
 # class ListUsers(APIView):
 #     def get(self, request, format=None):

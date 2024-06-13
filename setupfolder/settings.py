@@ -22,10 +22,10 @@ load_dotenv()
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-zyh&tx(2%g_roj#g4dc*$-u9hsas^mga&z^cjfvs7b!-!n=27$"
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG =  True
 
 ALLOWED_HOSTS = ['*'] #Remember to change
 
@@ -152,6 +152,7 @@ STATIC_URL = "static/"
 STATICFILE_DIRS = [
     os.path.join(BASE_DIR,"static"),
 ] 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')# ?
 MEDIA_URL = "media/"
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 
@@ -167,8 +168,14 @@ CORS_ALLOW_HEADERS = [
     'Accept-Language',  # Add accept-language to the list of allowed headers
     'Authorization',
     'Content-Type',
+    'User-Agent',
     # Add any other headers you want to allow here
 ]
 
-
-#WSGI_APPLICATION = 'wsgi.application'
+# Security settings
+#SECURE_SSL_REDIRECT = True
+#SESSION_COOKIE_SECURE = True
+#CSRF_COOKIE_SECURE = True
+#SECURE_HSTS_SECONDS = 3600
+#SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+#SECURE_HSTS_PRELOAD = True

@@ -18,8 +18,7 @@ class UserSerializer(serializers.ModelSerializer):
     def create(self,validated_data):
         user = User.objects.create_user(**validated_data)
         token = Token.objects.create(user = user)
-        print(token)
-        return token
+        return token.key
     def update(self, instance, validated_data):
         # Implement logic to update an existing Model instance
         instance.user = validated_data.get('user', instance.user)
