@@ -28,7 +28,7 @@ def get_product_portfolio(request):
             "description":i.description} for i in ProductPortfolio.objects.all()]  
     return Response(res,status = status.HTTP_200_OK)
 
-@permission_classes([AllowAny])
+
 @api_view(['GET','POST'])
 def lang(request):
     if(request.method == 'POST'):
@@ -49,7 +49,6 @@ def create_user(request):
         for i in data:
             d[i] = data[i]
         data = d
-        print(data)
         newUser = UserSerializer(data = data)
         if(newUser.is_valid()):
             token = newUser.save()
@@ -99,12 +98,23 @@ def change_product(request):
         pass
     return Response(str(data),status = status.HTTP_200_OK)
 
-class UserViewSet(viewsets.ModelViewSet):
+#class UserViewSet(viewsets.ModelViewSet):
+#    queryset = User.objects.all()
+#    serializer_class = UserSerializer
+#    permission_classes = (AllowAny,)
+#    def get(self,request):
+#        return self.request.user
+    
+class UserDetailView(APIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    permission_classes = (AllowAny,)
-    def get_object(self):
-        return self.request.user
+    authentication_classes(TokenAuthentication,)
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request,format= None):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
 # class ListUsers(APIView):
 #     def get(self, request, format=None):
